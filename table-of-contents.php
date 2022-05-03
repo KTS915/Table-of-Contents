@@ -4,7 +4,7 @@
  * Description: Creates an accessible table of contents for each post
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.1.0
+ * Version: 0.2.0
  */
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
@@ -17,6 +17,7 @@ function kts_insert_toc( $content ) {
 
 	# Parse HTML using PHP's DomDocument
 	$dom = new DomDocument();
+	libxml_use_internal_errors( true ); // handle malformed HTML and HTML5
 	$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
 	$dom->preserveWhiteSpace = false;
 
