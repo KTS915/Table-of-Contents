@@ -34,7 +34,7 @@ function kts_insert_toc( $content ) {
 	# Assign a target ID to each header
 	foreach( $nodes as $key => $node ) {
 
-		# Remove HTML entities from target
+		# Remove HTML entities from anchor
 		$anchor = htmlentities( $node->nodeValue, ENT_QUOTES, 'UTF-8' );
 
 		# Convert $anchor to alphanumeric string with dashes and set as ID
