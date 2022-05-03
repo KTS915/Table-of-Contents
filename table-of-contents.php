@@ -79,7 +79,7 @@ function kts_insert_toc( $content ) {
 	$toc .= '</details>';	
 
 	# Modify ToC for shortcode
-	$new_toc = str_replace( ['<details id="toc-container"><summary id="toc-title">Table of Contents</summary>', '</details>'], ['<nav id="toc-nav-container class="table-of-contents" aria-labelledby="toc-widget-title">', '</nav>'], $toc );
+	$new_toc = str_replace( ['<details id="toc-container"><summary id="toc-title">Table of Contents</summary>', '</details>'], ['<nav id="toc-nav-container" class="table-of-contents" aria-labelledby="toc-widget-title">', '</nav>'], $toc );
 
 	# Make shortcode ToC available via JavaScript
 	wp_localize_script( 'kts-toc-script', 'TOC', array(
