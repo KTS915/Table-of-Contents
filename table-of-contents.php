@@ -15,6 +15,13 @@ function kts_insert_toc( $content ) {
 		return $content;
 	}
 
+	# Check if user wants to hide TOC for this post
+	$post_id = get_the_ID();
+	$post_meta = get_post_meta( $post_id, 'kts_toc_hide', true );
+	if ( $post_meta === '1' ) {
+		return $content;
+	}
+
 	# Parse HTML using PHP's DomDocument
 	$dom = new DomDocument();
 	libxml_use_internal_errors( true ); // handle malformed HTML and HTML5
@@ -26,7 +33,12 @@ function kts_insert_toc( $content ) {
 	$expression = '( //h2|//h3|//h4	)';
 	$nodes = $finder->query( $expression );
 
-	# Start to build ToC	
+	# Don't display empty TOCs
+	if( $nodes->length === 0 ) {
+		return $content;
+	}
+
+	# Start to build ToC
 	$toc = '<details id="toc-container">';
 	$toc .= '<summary id="toc-title">Table of Contents</summary>';
 	$toc .= '<ul id="toc-list" class="toc-list">';
@@ -76,7 +88,7 @@ function kts_insert_toc( $content ) {
 
 	# Add end tags to ToC
 	$toc .= '</ul>';
-	$toc .= '</details>';	
+	$toc .= '</details>';
 
 	# Modify ToC for shortcode
 	$new_toc = str_replace( ['<details id="toc-container"><summary id="toc-title">Table of Contents</summary>', '</details>'], ['<nav id="toc-nav-container" class="table-of-contents" aria-labelledby="toc-widget-title">', '</nav>'], $toc );
@@ -85,7 +97,7 @@ function kts_insert_toc( $content ) {
 	wp_localize_script( 'kts-toc-script', 'TOC', array(
 		'toc' => $new_toc
 	) );
-	
+
 	# Save DomDocument to variable
 	$new_content = $dom->saveHTML( $dom );
 
@@ -113,7 +125,7 @@ function kts_toc_widget_title( $title, $instance = [], $id_base = '' ) {
 	if ( ! empty( $instance['content'] ) && has_shortcode( $instance['content'], 'kts_toc' ) ) {
 		$title = '<span id="toc-widget-title">' . $title . '</span>';
 	}
-	return $title;	
+	return $title;
 }
 add_filter( 'widget_title', 'kts_toc_widget_title', 10, 3 );
 
@@ -128,3 +140,49 @@ function kts_toc_style_script() {
 	wp_enqueue_script( 'kts-toc-script', plugin_dir_url( __FILE__ ) . 'js/scripts.js', null, null, true );
 }
 add_action( 'wp_enqueue_scripts', 'kts_toc_style_script' );
+
+
+/* ADD META BOX FOR HIDING TOC */
+function kts_toc_add_hide_meta_box() {
+	add_meta_box(
+	'kts_toc_hide_meta_box',
+	'Table of content',
+	'kts_toc_render_hide_meta_box',
+	'post',
+	'side',
+	'default'
+	);
+}
+add_action( 'add_meta_boxes', 'kts_toc_add_hide_meta_box' );
+
+
+/* RENDER META BOX FOR HIDING TOC */
+function kts_toc_render_hide_meta_box( $object, $box ) {
+	$meta = get_post_meta( $object->ID, 'kts_toc_hide', true );
+	wp_nonce_field( basename( __FILE__ ), 'kts_toc_nonce_hide_meta_box' );
+	echo '<p>';
+	echo '   <input class="widefat" type="checkbox" ' . checked( $meta === '1' ? 1 : 0, 1, false ) . 'name="kts-toc-hide" id="kts-toc-hide" value="1" size="30" />Don\'t display';
+	echo '</p>';
+
+}
+
+
+/* SAVE POST META FOR HIDING TOC */
+function kts_toc_save_post_meta( $post_id, $post ) {
+	if ( get_post_type($post) !== 'post' ) {
+		return;
+	}
+	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) || ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
+		die ('Nonce verification error.');
+	}
+
+	$post_type = get_post_type_object( $post->post_type );
+	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+		die ('User capabilities error.');
+	}
+
+	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( $_POST['kts-toc-hide'] ) : '0';
+
+	update_post_meta( $post_id, 'kts_toc_hide', $new_meta_value === '1' ? '1' : '0' );
+}
+add_action( 'save_post', 'kts_toc_save_post_meta', 10, 2 );
