@@ -33,6 +33,11 @@ function kts_insert_toc( $content ) {
 	$expression = '( //h2|//h3|//h4	)';
 	$nodes = $finder->query( $expression );
 
+	# Don't display empty TOCs
+	if( $nodes->length === 0 ) {
+		return $content;
+	}
+
 	# Start to build ToC
 	$toc = '<details id="toc-container">';
 	$toc .= '<summary id="toc-title">Table of Contents</summary>';
