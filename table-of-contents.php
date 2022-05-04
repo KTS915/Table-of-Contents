@@ -22,8 +22,6 @@ function kts_insert_toc( $content ) {
 		return $content;
 	}
 
-	//$meta = ;
-
 	# Parse HTML using PHP's DomDocument
 	$dom = new DomDocument();
 	libxml_use_internal_errors( true ); // handle malformed HTML and HTML5
