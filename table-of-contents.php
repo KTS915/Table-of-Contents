@@ -4,7 +4,7 @@
  * Description: Creates an accessible table of contents for each post
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.2.0
+ * Version: 0.3.0
  */
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
@@ -15,7 +15,7 @@ function kts_insert_toc( $content ) {
 		return $content;
 	}
 
-	# Check if user wants to hide TOC for this post
+	# Check if user wants to hide ToC for this post
 	$post_id = get_the_ID();
 	$post_meta = get_post_meta( $post_id, 'kts_toc_hide', true );
 	if ( $post_meta === '1' ) {
@@ -24,7 +24,7 @@ function kts_insert_toc( $content ) {
 
 	# Parse HTML using PHP's DomDocument
 	$dom = new DomDocument();
-	libxml_use_internal_errors( true ); // handle malformed HTML and HTML5
+	libxml_use_internal_errors( true ); // handle HTML5 tags and malformed HTML
 	$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
 	$dom->preserveWhiteSpace = false;
 
@@ -33,8 +33,8 @@ function kts_insert_toc( $content ) {
 	$expression = '( //h2|//h3|//h4	)';
 	$nodes = $finder->query( $expression );
 
-	# Don't display empty TOCs
-	if( $nodes->length === 0 ) {
+	# Don't display empty ToCs
+	if ( $nodes->length === 0 ) {
 		return $content;
 	}
 
@@ -146,7 +146,7 @@ add_action( 'wp_enqueue_scripts', 'kts_toc_style_script' );
 function kts_toc_add_hide_meta_box() {
 	add_meta_box(
 	'kts_toc_hide_meta_box',
-	'Table of content',
+	'Table of Contents',
 	'kts_toc_render_hide_meta_box',
 	'post',
 	'side',
@@ -161,7 +161,7 @@ function kts_toc_render_hide_meta_box( $object, $box ) {
 	$meta = get_post_meta( $object->ID, 'kts_toc_hide', true );
 	wp_nonce_field( basename( __FILE__ ), 'kts_toc_nonce_hide_meta_box' );
 	echo '<p>';
-	echo '   <input class="widefat" type="checkbox" ' . checked( $meta === '1' ? 1 : 0, 1, false ) . 'name="kts-toc-hide" id="kts-toc-hide" value="1" size="30" />Don\'t display';
+	echo '<input class="widefat" type="checkbox" ' . checked( $meta === '1' ? 1 : 0, 1, false ) . 'name="kts-toc-hide" id="kts-toc-hide" value="1" size="30" /> Do not display';
 	echo '</p>';
 
 }
@@ -169,20 +169,17 @@ function kts_toc_render_hide_meta_box( $object, $box ) {
 
 /* SAVE POST META FOR HIDING TOC */
 function kts_toc_save_post_meta( $post_id, $post ) {
-	if ( get_post_type($post) !== 'post' ) {
-		return;
-	}
 	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) || ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
-		die ('Nonce verification error.');
+		die( 'Nonce verification error.' );
 	}
 
 	$post_type = get_post_type_object( $post->post_type );
-	if ( !current_user_can( $post_type->cap->edit_post, $post_id ) ) {
-		die ('User capabilities error.');
+	if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+		die( 'User capabilities error.' );
 	}
 
 	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( $_POST['kts-toc-hide'] ) : '0';
 
 	update_post_meta( $post_id, 'kts_toc_hide', $new_meta_value === '1' ? '1' : '0' );
 }
-add_action( 'save_post', 'kts_toc_save_post_meta', 10, 2 );
+add_action( 'save_post_post', 'kts_toc_save_post_meta', 10, 2 );
