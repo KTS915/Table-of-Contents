@@ -169,6 +169,9 @@ function kts_toc_render_hide_meta_box( $object, $box ) {
 
 /* SAVE POST META FOR HIDING TOC */
 function kts_toc_save_post_meta( $post_id, $post ) {
+	if ( get_post_type($post) !== 'post' ) {
+		return;
+	}
 	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) || ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
 		die ('Nonce verification error.');
 	}
