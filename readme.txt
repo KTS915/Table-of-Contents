@@ -13,7 +13,7 @@ Provides an accessible table of contents for posts.
 == Description and Usage ==
 Once activated, the plugin automatically inserts a table of contents (ToC) on every post just before the post content. The ToC will include every h2, h3, and h4 heading. The plugin uses the <details> and <summary> HTML tags to ensure that the ToC is both fully accessible and collapsible without requiring any JavaScript.
 
-The plugin also provides an optional [kts_toc] shortcode that is designed to be placed inside a custom HTML widget, which can then be named manually (e.g. Table of Contents). In this case, the <details> and <summary> HTML tags are replaced by <nav> tags to maintain accessibility, and the TOC will not be collapsible. This widget relies on some JavaScript, but it is so tiny (less than 150 bytes) that it will have no discernible effect on your page loading time.
+The plugin also provides an optional [kts_toc] shortcode that is designed to be placed inside a custom HTML widget, which can then be named manually (e.g. Table of Contents). In this case, the <details> and <summary> HTML tags are replaced by <nav> tags to maintain accessibility, and the TOC will not be collapsible. This widget relies on some JavaScript, but it is so tiny (less than 180 bytes) that it will have no discernible effect on your page loading time.
 
 Since version 0.3.0 (and thanks to xxsimoxx) the plugin also creates a metabox on the post edit screen which enables the user to choose not to display a ToC on that post. Further options may be added in future if user demand warrants.
 
