@@ -4,7 +4,7 @@
  * Description: Creates an accessible table of contents for each post
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.3.0
+ * Version: 0.3.1
  */
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
@@ -145,12 +145,12 @@ add_action( 'wp_enqueue_scripts', 'kts_toc_style_script' );
 /* ADD META BOX FOR HIDING TOC */
 function kts_toc_add_hide_meta_box() {
 	add_meta_box(
-	'kts_toc_hide_meta_box',
-	'Table of Contents',
-	'kts_toc_render_hide_meta_box',
-	'post',
-	'side',
-	'default'
+		'kts_toc_hide_meta_box',
+		'Table of Contents',
+		'kts_toc_render_hide_meta_box',
+		'post',
+		'side',
+		'default'
 	);
 }
 add_action( 'add_meta_boxes', 'kts_toc_add_hide_meta_box' );
@@ -169,13 +169,22 @@ function kts_toc_render_hide_meta_box( $object, $box ) {
 
 /* SAVE POST META FOR HIDING TOC */
 function kts_toc_save_post_meta( $post_id, $post ) {
-	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) || ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
-		die( 'Nonce verification error.' );
-	}
+
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+    	}
 
 	$post_type = get_post_type_object( $post->post_type );
 	if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 		die( 'User capabilities error.' );
+	}
+
+	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
+		die( 'Nonce verification error.' );
 	}
 
 	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( $_POST['kts-toc-hide'] ) : '0';
