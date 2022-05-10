@@ -4,7 +4,7 @@ Tags: table of contents, classicpress
 Requires at least: CP 1.4.1
 Tested up to: CP 1.4.1
 Requires PHP: 7.0
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
