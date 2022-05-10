@@ -4,7 +4,7 @@
  * Description: Creates an accessible table of contents for each post
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.3.1
+ * Version: 0.3.2
  */
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
