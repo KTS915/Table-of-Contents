@@ -174,9 +174,8 @@ function kts_toc_save_post_meta( $post_id, $post ) {
 		return;
     	}
 
-	$post_type = get_post_type_object( $post->post_type );
-	if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
-		die( 'User capabilities error.' );
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
 	}
 
 	if ( ! isset( $_POST['kts_toc_nonce_hide_meta_box'] ) ) {
@@ -184,7 +183,7 @@ function kts_toc_save_post_meta( $post_id, $post ) {
 	}
 
 	if ( ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
-		die( 'Nonce verification error.' );
+		return;
 	}
 
 	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( $_POST['kts-toc-hide'] ) : '0';
