@@ -1,5 +1,4 @@
 === Table of Contents ===
-
 Description: Provides an accessible table of contents for posts
 Author: Tim Kaye
 Author URI: https://timkaye.org
