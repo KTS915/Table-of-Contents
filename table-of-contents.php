@@ -4,12 +4,12 @@
  * Description: Creates an accessible table of contents for each post
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.4.0
+ * Version: 0.5.0
  * License: GPLv3
  */
 
 /* ENABLE UPDATING MECHANISM */
-require_once( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'inc/UpdateClient.class.php' );
+require_once __DIR__ . '/inc/UpdateClient.class.php';
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
 function kts_insert_toc( $content ) {
