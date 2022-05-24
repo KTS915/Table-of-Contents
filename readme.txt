@@ -19,7 +19,7 @@ Once activated, the plugin automatically inserts a table of contents (ToC) on ev
 The plugin also provides an optional [kts_toc] shortcode that is designed to be placed inside a custom HTML widget, which can then be named manually (e.g. Table of Contents). In this case, the <details> and <summary> HTML tags are replaced by <nav> tags to maintain accessibility, and the ToC will not be collapsible. This widget relies on some JavaScript, but it is so tiny (less than 150 bytes) that it will have no discernible effect on your page loading time.
 
 == Configuration ==
-The plugin adds a metabox, headed Table of Contents, on the post edit screen. Checking the boc marked "Do not display" and then hitting Update will ensure that no ToC appears on that page.
+The plugin adds a metabox, headed Table of Contents, on the post edit screen. Checking the box marked "Do not display" and then hitting Update will ensure that no ToC appears on that page.
 
 It is also possible to hide the ToC using CSS, like this: #toc-container { display: none; }
 
