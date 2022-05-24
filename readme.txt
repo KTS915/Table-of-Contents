@@ -8,7 +8,7 @@ Tested: 4.9.99
 Requires PHP: 7.0
 Version: 0.5.0
 Requires: CP 1.4.1
-Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.4.0/kts-table-of-contents.zip
+Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.0/kts-table-of-contents.zip
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
