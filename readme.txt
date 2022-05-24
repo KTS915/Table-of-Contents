@@ -6,7 +6,7 @@ Contributors: KTS915, xxsimoxx
 Tags: table of contents, classicpress
 Tested: 4.9.99
 Requires PHP: 7.0
-Version: 0.1.0
+Version: 0.4.0
 Requires: CP 1.4.1
 Download link: 
 License: GPLv3
