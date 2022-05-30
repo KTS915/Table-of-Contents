@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Table of Contents
- * Description: Creates an accessible table of contents for each post
+ * Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.5.0
+ * Version: 0.5.1
  * License: GPLv3
  */
 
@@ -45,7 +45,7 @@ function kts_insert_toc( $content ) {
 	# Start to build ToC
 	$toc = '<details id="toc-container">';
 	$toc .= '<summary id="toc-title">Table of Contents</summary>';
-	$toc .= '<ul id="toc-list" class="toc-list">';
+	$toc .= '<ol id="toc-list" class="toc-list">';
 
 	# Assign a target ID to each header
 	foreach( $nodes as $key => $node ) {
@@ -57,32 +57,32 @@ function kts_insert_toc( $content ) {
 		$anchor = sanitize_title_with_dashes( $anchor . '-' . $key );
 		$node->setAttribute( 'id', $anchor );
 
-		# Identify which <li> tags to wrap in <ul> tags
+		# Identify which <li> tags to wrap in <ol> tags
 		$prefix = '';
 		$suffix = '';
 		if ( $node->tagName === 'h4' ) {
 			if ( $nodes[$key - 1]->tagName !== 'h4' ) {
-				$prefix = '<ul class="h4-wrapper">';
+				$prefix = '<ol class="h4-wrapper">';
 			}
 			if ( empty( $nodes[$key + 1] ) ) {
-				$suffix = '</ul></ul>';
+				$suffix = '</ol></ol>';
 			}
 			elseif ( $nodes[$key + 1]->tagName === 'h3' ) {
-				$suffix = '</ul>';
+				$suffix = '</ol>';
 			}
 			elseif ( $nodes[$key + 1]->tagName === 'h2' ) {
-				$suffix = '</ul></ul>';
+				$suffix = '</ol></ol>';
 			}
 		}
 		elseif ( $node->tagName === 'h3' ) {
 			if ( $nodes[$key - 1]->tagName === 'h2' ) {
-				$prefix = '<ul class="h3-wrapper">';
+				$prefix = '<ol class="h3-wrapper">';
 			}
 			if ( empty( $nodes[$key + 1] ) ) {
-				$suffix = '</ul>';
+				$suffix = '</ol>';
 			}
 			elseif ( $nodes[$key + 1]->tagName === 'h2' ) {
-				$suffix = '</ul>';
+				$suffix = '</ol>';
 			}
 		}
 
@@ -91,7 +91,7 @@ function kts_insert_toc( $content ) {
 	}
 
 	# Add end tags to ToC
-	$toc .= '</ul>';
+	$toc .= '</ol>';
 	$toc .= '</details>';
 
 	# Modify ToC for shortcode
