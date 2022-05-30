@@ -6,7 +6,7 @@ Contributors: KTS915, xxsimoxx
 Tags: table of contents, classicpress
 Tested: 4.9.99
 Requires PHP: 7.0
-Version: 0.5.0
+Version: 0.5.1
 Requires: CP 1.4.1
 Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.0/kts-table-of-contents.zip
 License: GPLv3
