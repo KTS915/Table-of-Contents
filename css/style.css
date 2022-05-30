@@ -23,12 +23,14 @@
 	padding: 0.7em 1em 0 0;
 }
 .toc-list,
-.toc-list ul,
-.toc-list ul ul {
+.toc-list ol,
+.toc-list ol ol {
 	list-style: none;
 }
-.toc-list ul,
-.toc-list ul ul {
+.toc-list ol,
+.toc-list ol ol,
+.table-of-contents ol,
+.table-of-contents ol ol {
 	margin: 0 0 0 1.5em;
 }
 #toc-container li {
