@@ -1,5 +1,4 @@
-### Table of Contents
-Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
+Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
 
 ## Description
 Once activated, the plugin automatically inserts a table of contents (ToC) on every post just before the post content. The ToC will include every `h2`, `h3`, and `h4` heading. The plugin uses the `details` and `summary` HTML tags to ensure that the ToC is both fully accessible and collapsible without requiring any JavaScript.
