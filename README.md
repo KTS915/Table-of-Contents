@@ -1,18 +1,5 @@
 ### Table of Contents
 Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
-Author: Tim Kaye
-Author URI: https://timkaye.org
-Contributors: KTS915, xxsimoxx
-Tags: table of contents, classicpress
-Tested: 4.9.99
-Requires PHP: 7.0
-Version: 0.5.1
-Requires: CP 1.4.1
-Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.0/kts-table-of-contents.zip
-License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
-
-> Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
 
 ## Description
 Once activated, the plugin automatically inserts a table of contents (ToC) on every post just before the post content. The ToC will include every `h2`, `h3`, and `h4` heading. The plugin uses the `details` and `summary` HTML tags to ensure that the ToC is both fully accessible and collapsible without requiring any JavaScript.
