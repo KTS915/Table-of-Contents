@@ -3,14 +3,16 @@ Description: Provides an accessible table of contents for posts
 Author: Tim Kaye
 Author URI: https://timkaye.org
 Contributors: KTS915, xxsimoxx
+Plugin URI: https://timkaye.org
 Tags: table of contents, classicpress
 Tested: 4.9.99
 Requires PHP: 7.0
 Version: 0.5.1
-Requires: CP 1.4.1
-Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.0/kts-table-of-contents.zip
+Requires: 1.4.1
+Tested: 1.4.1
+Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.1/kts-table-of-contents.zip
 License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 Once activated, the plugin automatically inserts a table of contents (ToC) on every post just before the post content. The ToC will include every `h2`, `h3`, and `h4` heading. The plugin uses the `details` and `summary` HTML tags to ensure that the ToC is both fully accessible and collapsible without requiring any JavaScript.
