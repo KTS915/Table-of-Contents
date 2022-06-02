@@ -1,11 +1,13 @@
 <?php
 /**
  * Plugin Name: Table of Contents
+ * Plugin URI: https://timkaye.org
  * Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
+ * Version: 0.5.1
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
- * Version: 0.5.1
  * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 /* ENABLE UPDATING MECHANISM */
@@ -99,7 +101,7 @@ function kts_insert_toc( $content ) {
 
 	# Make shortcode ToC available via JavaScript
 	wp_localize_script( 'kts-toc-script', 'TOC', array(
-		'toc' => $new_toc
+		'toc' => $new_toc,
 	) );
 
 	# Save DomDocument to variable
@@ -154,7 +156,7 @@ function kts_toc_add_hide_meta_box() {
 		'kts_toc_render_hide_meta_box',
 		'post',
 		'side',
-		'default'
+		'default',
 	);
 }
 add_action( 'add_meta_boxes', 'kts_toc_add_hide_meta_box' );
@@ -186,12 +188,10 @@ function kts_toc_save_post_meta( $post_id, $post ) {
 		return;
 	}
 
-	if ( ! wp_verify_nonce( $_POST['kts_toc_nonce_hide_meta_box'], basename( __FILE__ ) ) ) {
+	if ( ! wp_verify_nonce( sanitize_key( $_POST['kts_toc_nonce_hide_meta_box'] ), basename( __FILE__ ) ) ) {
 		return;
 	}
 
-	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( $_POST['kts-toc-hide'] ) : '0';
-
-	update_post_meta( $post_id, 'kts_toc_hide', $new_meta_value === '1' ? '1' : '0' );
+	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( wp_unslash( $_POST['kts-toc-hide'] ) ) : '0';
 }
 add_action( 'save_post_post', 'kts_toc_save_post_meta', 10, 2 );
