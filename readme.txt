@@ -5,12 +5,11 @@ Author URI: https://timkaye.org
 Contributors: KTS915, xxsimoxx
 Plugin URI: https://timkaye.org
 Tags: table of contents, classicpress
-Tested: 4.9.99
+Tested up to: 4.9.99
 Requires PHP: 7.0
-Version: 0.5.1
-Requires: 1.4.1
-Tested: 1.4.1
-Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.1/kts-table-of-contents.zip
+Requires at least: 4.9.15
+Version: 0.5.2
+Download link: https://github.com/KTS915/Table-of-Contents/releases/download/v0.5.2/kts-table-of-contents.zip
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
