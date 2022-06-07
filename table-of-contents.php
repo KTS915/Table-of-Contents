@@ -3,7 +3,7 @@
  * Plugin Name: Table of Contents
  * Plugin URI: https://timkaye.org
  * Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
- * Version: 0.5.1
+ * Version: 0.5.2
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
  * License: GPLv3
