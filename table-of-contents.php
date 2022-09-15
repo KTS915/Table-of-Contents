@@ -2,16 +2,21 @@
 /**
  * Plugin Name: Table of Contents
  * Plugin URI: https://timkaye.org
- * Description: Provides an accessible, automatically-generated table of contents for all posts, with an option to disable per post and a shortcode that can be added to a widget.
- * Version: 0.5.2
+ * Description: Provides an accessible, automatically-generated table of contents for all posts, with options to disable per post, set the label for the ToC, and to have the ToC be initially open or closed. There is also a shortcode that can be added to a widget.
+ * Version: 0.6.0
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
+ * Tested up to: 4.9.99
+ * Requires CP: 1.4
+ * Requires PHP: 7.0
+ * Requires at least: 4.9.15
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 /* ENABLE UPDATING MECHANISM */
 require_once __DIR__ . '/inc/UpdateClient.class.php';
+require_once __DIR__ . '/inc/settings.php'; // enables changes of settings for this plugin
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
 function kts_insert_toc( $content ) {
@@ -44,9 +49,22 @@ function kts_insert_toc( $content ) {
 		return $content;
 	}
 
+	# Get label and initial status for ToC
+	$toc_options = get_option( 'toc' );
+	$toc_label = 'Table of Contents';
+	$inital_status = 'closed';
+	if ( ! empty( $toc_options ) ) {
+		if ( ! empty( $toc_options['label'] ) ) {
+			$label = $toc_options['label'];
+		}
+		if ( ! empty( $toc_options['initial'] ) ) {
+			$inital_status = $toc_options['initial'];
+		}
+	}
+
 	# Start to build ToC
-	$toc = '<details id="toc-container">';
-	$toc .= '<summary id="toc-title">Table of Contents</summary>';
+	$toc = '<details id="toc-container"' . esc_attr( $inital_status ) . '>';
+	$toc .= '<summary id="toc-title">' . esc_html( $toc_label ) . '</summary>';
 	$toc .= '<ol id="toc-list" class="toc-list">';
 
 	# Assign a target ID to each header
@@ -97,7 +115,7 @@ function kts_insert_toc( $content ) {
 	$toc .= '</details>';
 
 	# Modify ToC for shortcode
-	$new_toc = str_replace( ['<details id="toc-container"><summary id="toc-title">Table of Contents</summary>', '</details>'], ['<nav id="toc-nav-container" class="table-of-contents" aria-labelledby="toc-widget-title">', '</nav>'], $toc );
+	$new_toc = str_replace( ['<details id="toc-container"' . esc_attr( $inital_status ) . '><summary id="toc-title">' . esc_html( $toc_label ) . '</summary>', '</details>'], ['<nav id="toc-nav-container" class="table-of-contents" aria-labelledby="toc-widget-title">', '</nav>'], $toc );
 
 	# Make shortcode ToC available via JavaScript
 	wp_localize_script( 'kts-toc-script', 'TOC', array(
@@ -193,5 +211,7 @@ function kts_toc_save_post_meta( $post_id, $post ) {
 	}
 
 	$new_meta_value = isset( $_POST['kts-toc-hide'] ) ? sanitize_html_class( wp_unslash( $_POST['kts-toc-hide'] ) ) : '0';
+
+	update_post_meta( $post_id, 'kts_toc_hide', $new_meta_value === '1' ? '1' : '0' );
 }
 add_action( 'save_post_post', 'kts_toc_save_post_meta', 10, 2 );
