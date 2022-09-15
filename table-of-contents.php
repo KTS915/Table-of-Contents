@@ -55,9 +55,10 @@ function kts_insert_toc( $content ) {
 	$toc_options = get_option( 'toc' );
 	$toc_label = 'Table of Contents';
 	$inital_status = 'closed';
+	
 	if ( ! empty( $toc_options ) ) {
 		if ( ! empty( $toc_options['label'] ) ) {
-			$label = $toc_options['label'];
+			$toc_label = $toc_options['label'];
 		}
 		if ( ! empty( $toc_options['initial'] ) ) {
 			$inital_status = $toc_options['initial'];
