@@ -16,7 +16,9 @@
 
 /* ENABLE UPDATING MECHANISM */
 require_once __DIR__ . '/inc/UpdateClient.class.php';
-require_once __DIR__ . '/inc/settings.php'; // enables changes of settings for this plugin
+
+/* CREATE SETTINGS PAGE */
+require_once __DIR__ . '/inc/settings.php';
 
 /* USE FILTER TO ADD TOC AND TARGET ANCHORS TO POST CONTENT */
 function kts_insert_toc( $content ) {
