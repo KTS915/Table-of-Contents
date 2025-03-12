@@ -3,19 +3,16 @@
  * Plugin Name: Table of Contents
  * Plugin URI: https://timkaye.org
  * Description: Provides an accessible, automatically-generated table of contents for all posts, with options to disable per post, set the label for the ToC, and to have the ToC be initially open or closed. There is also a shortcode that can be added to a widget.
- * Version: 0.6.0
+ * Version: 0.7.0
  * Author: Tim Kaye
  * Author URI: https://timkaye.org
  * Tested up to: 4.9.99
- * Requires CP: 1.4
- * Requires PHP: 7.0
- * Requires at least: 4.9.15
+ * Requires CP: 2.1
+ * Requires PHP: 7.4
+ * Requires at least: 6.2.3
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
-
-/* ENABLE UPDATING MECHANISM */
-require_once __DIR__ . '/inc/UpdateClient.class.php';
 
 /* CREATE SETTINGS PAGE */
 require_once __DIR__ . '/inc/settings.php';
@@ -55,7 +52,7 @@ function kts_insert_toc( $content ) {
 	$toc_options = get_option( 'toc' );
 	$toc_label = 'Table of Contents';
 	$inital_status = 'closed';
-	
+
 	if ( ! empty( $toc_options ) ) {
 		if ( ! empty( $toc_options['label'] ) ) {
 			$toc_label = $toc_options['label'];
