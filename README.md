@@ -1,3 +1,15 @@
+# KTS-Display-Widgets
+Author:            Tim Kaye
+
+Version:           0.7.0
+
+Requires CP:       2.1
+
+Requires at least: 6.2.3
+
+Requires PHP:      7.4
+
+## Description
 Provides an accessible, automatically-generated table of contents for all posts, with options to disable per post, set the label for the ToC, and to have the ToC be initially open or closed. There is also a shortcode that can be added to a widget.
 
 ## Description
