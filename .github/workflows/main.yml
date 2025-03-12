@@ -22,8 +22,8 @@ jobs:
         with:
             name: ${{ github.event.repository.name }}-${{ github.ref_name }}
             path: ${{ github.event.repository.name }}-${{ github.ref_name }}.zip
-      - name: KTS Table of Contents
-        uses: KTS915/table-of-contents@master
+      - name: Upload to release
+        uses: JasonEtco/upload-to-release@master
         with:
           args: ${{ github.event.repository.name }}-${{ github.ref_name }}.zip application/zip
         env:
