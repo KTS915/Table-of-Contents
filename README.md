@@ -1,4 +1,4 @@
-# KTS-Display-Widgets
+# KTS Table of Contents
 Author:            Tim Kaye
 
 Version:           0.7.0
